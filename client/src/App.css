@@ -1,0 +1,48 @@
+:root {
+  --main-bg-color: #3bad0e;
+  --secondary-bg-color: #3fcc3f;
+  --tercery-bg-color: #09a004;
+  --cuarto-bg-color: #0c5149;
+
+  --font-color: #0d192b;
+  --body-color: #2d3542fd;
+
+
+
+  
+}
+
+
+
+.form-control{
+  border-radius: 1em !important;
+  padding: 1em;
+}
+.form-control:focus{
+  box-shadow: rgb(13, 130, 23) 0px 1px 4px;
+}
+.card{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 1em !important;
+}
+.btn{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
+  border-radius: 1em !important;
+
+}
+
+.my-navbar {
+  border-bottom: 1em solid var(--secondary-bg-color);
+}
+
+.nav-link {
+  color: var(--font-color);
+}
+
+.nav-link:hover {
+  color: var(--font-color);
+}
+.active {
+  color: var(--cuarto-bg-color) !important;
+  font-weight: 800;
+}
