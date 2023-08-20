@@ -7,7 +7,8 @@ export default function FormPresupuestoComponent({
   presupuesto,
   setShowModalPresupuesto,
   getPresupuestosTodos,
-  getPresupuestobyId
+  getPresupuestobyId,
+  
 }) {
   const {
     register,

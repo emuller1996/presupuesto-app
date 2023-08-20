@@ -16,7 +16,6 @@ const getTodosPresupuesto = async (req, res) => {
 const createPresupuesto = async (req, res) => {
   const dataPresupuesto = req.body
   try {
-    console.log(dataPresupuesto);
     const presupuestoCreado = await Presupuesto.create(dataPresupuesto);
     return res.status(201).json({ message: "Presupuesto Creadio", presupuesto: presupuestoCreado })
   } catch (error) {
@@ -25,20 +24,14 @@ const createPresupuesto = async (req, res) => {
 }
 const getPresupuestoById = async (req, res) => {
   try {
-    console.log(req.params);
     const presupuestoById = await Presupuesto.findByPk(req.params.id)
-    console.log("procentaje : gasto : ", (presupuestoById.totalGasto / presupuestoById.totalCantidad) * 100);
-    console.log("porcentaje : restante : ", (presupuestoById.totalRestante / presupuestoById.totalCantidad) * 100);
-    console.log("porcentaje : asignado ", (presupuestoById.totalAsignado / presupuestoById.totalCantidad) * 100);
     const dataAdd = {
       gastoPorcentaje: (presupuestoById.totalGasto / presupuestoById.totalCantidad) * 100,
       restantePorcenjate: (presupuestoById.totalRestante / presupuestoById.totalCantidad) * 100,
       asignadoPorcentaje: (presupuestoById.totalAsignado / presupuestoById.totalCantidad) * 100
     }
     const t = Object.assign(presupuestoById.dataValues, dataAdd)
-    console.log(t);
-
-    return res.status(200).json(presupuestoById)
+    return res.status(200).json(t)
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: error.message })
@@ -51,6 +44,7 @@ const createProyectoByPresupuesto = async (req, res) => {
 
     const presupuesto = await Presupuesto.findByPk(req.params.id);
     presupuesto.totalAsignado += dataProyecto.montoTotal;
+    presupuesto.totalRestante -= dataProyecto.montoTotal;
     presupuesto.save()
     const proyectoCreate = await Proyecto.create(dataProyecto)
     return res.json({ message: "Se Creo correctamente el proyecto", proyecto: proyectoCreate })

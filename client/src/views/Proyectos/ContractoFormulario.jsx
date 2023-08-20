@@ -15,7 +15,7 @@ export default function ContractoFormulario({
   } = useForm();
   const onSubmit = async (data) => {
     data.monto_total = parseInt(data.monto_total);
-    data.proyectosId = parseInt(proyectoId);
+    data.ProyectoId = parseInt(proyectoId);
     data.fecha_creado = new Date().toISOString();
 
     console.log(Object.assign(data, { monto_usado: 0, monto_disponible: 0 }));

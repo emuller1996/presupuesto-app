@@ -142,7 +142,22 @@ export default function PresupuestoComponent(props) {
 
             <div className="row mt-3 g-3">
               <div className="col-12">
-                <p className="m-0 fw-semibold text-center"> Gastado. </p>
+                <div className="d-flex justify-content-evenly">
+                  <div className="">
+                    <span>Disponible</span>
+                    <span className="px-2 bg-secondary ms-2 rounded-2"></span>
+                  </div>
+
+                  <div className="">
+                    <span>Asignado</span>
+                    <span className="px-2 bg-warning ms-2 rounded-2"></span>
+                  </div>
+
+                  <div className="">
+                    <span>Gastado / Usado </span>
+                    <span className="px-2 bg-danger ms-2 rounded-2"></span>
+                  </div>
+                </div>
                 <ProgressBar className="mb-3" style={{ height: "2em" }}>
                   <ProgressBar striped variant="danger" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.gastoProcentaje} key={1} />
                   <ProgressBar variant="warning" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.asignadoPorcentaje} key={2} />
@@ -306,6 +321,7 @@ export default function PresupuestoComponent(props) {
             getProyectoByIdPresupuesto={getProyectoByIdPresupuesto}
             presupuestoSelecionado={presupuestoSelecionado}
             proyecto={proyectoSelecionado}
+            getPresupuestobyId={getPresupuestobyId}
           />
         </Modal.Body>
       </Modal>
@@ -322,6 +338,7 @@ export default function PresupuestoComponent(props) {
           <FormPresupuestoComponent
             setShowModalPresupuesto={setShowModalPresupuesto}
             getPresupuestosTodos={getPresupuestosTodos}
+            getPresupuestobyId={getPresupuestobyId}
           />
         </Modal.Body>
       </Modal>
@@ -370,6 +387,8 @@ export default function PresupuestoComponent(props) {
             <FormProyectoComponent
               getProyectoByIdPresupuesto={getProyectoByIdPresupuesto}
               presupuestoSelecionado={presupuestoSelecionado}
+              getPresupuestobyId={getPresupuestobyId}
+
             />
           </div>
         </div>

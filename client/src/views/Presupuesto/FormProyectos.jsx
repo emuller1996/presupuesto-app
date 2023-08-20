@@ -7,6 +7,7 @@ export default function FormProyectoComponent({
   presupuestoSelecionado,
   proyecto,
   getProyectoByIdPresupuesto,
+  getPresupuestobyId
 }) {
   const {
     register,
@@ -27,7 +28,9 @@ export default function FormProyectoComponent({
           Object.assign(data)
         );
         console.log(result);
-        getProyectoByIdPresupuesto(presupuestoSelecionado);
+        await getProyectoByIdPresupuesto(presupuestoSelecionado);
+        await getPresupuestobyId(presupuestoSelecionado)
+
         toast.success("Proyecto Actualizado Correctamente.");
       } catch (error) {
         console.log(error);
@@ -41,7 +44,8 @@ export default function FormProyectoComponent({
           Object.assign(data, { PresupuestoId: presupuestoSelecionado })
         );
         console.log(result);
-        getProyectoByIdPresupuesto(presupuestoSelecionado);
+        await getProyectoByIdPresupuesto(presupuestoSelecionado);
+        await getPresupuestobyId(presupuestoSelecionado)
         toast.success("Proyecto Creado Correctamente.");
         reset();
       } catch (error) {
