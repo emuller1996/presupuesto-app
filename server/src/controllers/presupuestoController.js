@@ -35,8 +35,8 @@ const getPresupuestoById = async (req, res) => {
       restantePorcenjate: (presupuestoById.totalRestante / presupuestoById.totalCantidad) * 100,
       asignadoPorcentaje: (presupuestoById.totalAsignado / presupuestoById.totalCantidad) * 100
     }
-    const t = Object.assign(presupuestoById, dataAdd)
-    console.log(presupuestoById);
+    const t = Object.assign(presupuestoById.dataValues, dataAdd)
+    console.log(t);
 
     return res.status(200).json(presupuestoById)
   } catch (error) {

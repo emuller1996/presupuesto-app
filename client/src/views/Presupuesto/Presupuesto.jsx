@@ -92,6 +92,7 @@ export default function PresupuestoComponent(props) {
                       primary: "#09a004",
                     },
                   })}
+
                   styles={{
                     control: (baseStyles, state) => ({
                       ...baseStyles,
@@ -102,6 +103,14 @@ export default function PresupuestoComponent(props) {
                       fontSize: "1.3em",
                       color: "#3bad0e",
                       fontWeight: "bold",
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: "1em",
+                      borderColor: "green",
+                      fontSize: "1.3em",
+                      fontWeight: "semibold",
+                      overflow: "hidden",
                     }),
                   }}
                   options={presupuestosTodos}
@@ -134,18 +143,12 @@ export default function PresupuestoComponent(props) {
             <div className="row mt-3 g-3">
               <div className="col-12">
                 <p className="m-0 fw-semibold text-center"> Gastado. </p>
-                <ProgressBar className="mb-3"> 
-                  <ProgressBar striped variant="danger" now={0} key={1} />
-                  <ProgressBar variant="warning" now={20} key={2} />
-                  <ProgressBar  variant="secondary" now={78} key={3} />
+                <ProgressBar className="mb-3" style={{ height: "2em" }}>
+                  <ProgressBar striped variant="danger" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.gastoProcentaje} key={1} />
+                  <ProgressBar variant="warning" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.asignadoPorcentaje} key={2} />
+                  <ProgressBar variant="secondary" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.restantePorcenjate} key={3} />
                 </ProgressBar>
-                <ProgressBar
-                  striped
-                  variant="success"
-                  className="rounded-3"
-                  style={{ height: "2em" }}
-                  now={40}
-                />
+
               </div>
               <div className="col-md-8">
                 <div class="card-group">
