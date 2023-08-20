@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize");
 const modeloPresupuesto = require("./models/Presupuesto.js");
+const modeloProyecto = require("./models/Proyecto.js");
+
 
 
 require("dotenv").config();
@@ -16,15 +18,21 @@ const sequelize = new Sequelize(
 );
 
 modeloPresupuesto(sequelize);
+modeloProyecto(sequelize);
+
 
 
 const {
     Presupuesto,
+    Proyecto
 } = sequelize.models;
 
 
+Presupuesto.hasMany(Proyecto)
+Proyecto.belongsTo(Presupuesto)
 
 module.exports = {
     Presupuesto,
+    Proyecto,
     db: sequelize,
 };

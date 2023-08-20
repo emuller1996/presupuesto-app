@@ -18,7 +18,7 @@ export default function FormProyectoComponent({
   const onSubmit = async (data) => {
     data.montoTotal = parseInt(data.montoTotal);
 
-    console.log(Object.assign(data, { presupuestoId: presupuestoSelecionado }));
+    console.log(Object.assign(data, { PresupuestoId: presupuestoSelecionado }));
 
     if (proyecto) {
       try {
@@ -38,7 +38,7 @@ export default function FormProyectoComponent({
       try {
         const result = await axios.post(
           `http://localhost:3001/presupuestos/${presupuestoSelecionado}/proyectos`,
-          Object.assign(data, { presupuestoId: presupuestoSelecionado })
+          Object.assign(data, { PresupuestoId: presupuestoSelecionado })
         );
         console.log(result);
         getProyectoByIdPresupuesto(presupuestoSelecionado);

@@ -134,6 +134,11 @@ export default function PresupuestoComponent(props) {
             <div className="row mt-3 g-3">
               <div className="col-12">
                 <p className="m-0 fw-semibold text-center"> Gastado. </p>
+                <ProgressBar className="mb-3"> 
+                  <ProgressBar striped variant="danger" now={0} key={1} />
+                  <ProgressBar variant="warning" now={20} key={2} />
+                  <ProgressBar  variant="secondary" now={78} key={3} />
+                </ProgressBar>
                 <ProgressBar
                   striped
                   variant="success"
