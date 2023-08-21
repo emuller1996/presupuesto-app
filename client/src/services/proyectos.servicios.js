@@ -19,7 +19,7 @@ export const getAllcontractosByProyectosService = async (id) => {
 };
 
 export const crearContractoProyectosServicio = async (data) => {
-  return await axios.post(`${URL_API}/proyectos/${data.proyectosId}/contractos`,data);
+  return await axios.post(`${URL_API}/proyectos/${data.ProyectoId}/contractos`,data);
 };
 
 export const deleteContractoServicio = async (idContracto) => {

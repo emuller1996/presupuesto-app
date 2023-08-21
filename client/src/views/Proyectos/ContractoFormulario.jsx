@@ -25,7 +25,7 @@ export default function ContractoFormulario({
         Object.assign(data, { monto_usado: 0, monto_disponible: 0 })
       );
       reset()
-      getAllProyectos(proyectoId);
+      await getAllProyectos(proyectoId);
     } catch (error) {
       console.log(error);
     }

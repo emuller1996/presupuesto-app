@@ -14,7 +14,7 @@ const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/presupuesto", name: "Dashboard", element: PresupuestoComponent },
   { path: "/proyecto/:id", name: "ProyectDetail", element: ProyectosComponent },
-  { path: "/facturas/:id", name: "Facturas", element: FacturasComponent },
+  { path: "/proyecto/:id/facturas", name: "Facturas", element: FacturasComponent },
 ];
 
 export default routes;

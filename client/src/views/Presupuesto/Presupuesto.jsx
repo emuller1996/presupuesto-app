@@ -159,7 +159,7 @@ export default function PresupuestoComponent(props) {
                   </div>
                 </div>
                 <ProgressBar className="mb-3" style={{ height: "2em" }}>
-                  <ProgressBar striped variant="danger" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.gastoProcentaje} key={1} />
+                  <ProgressBar striped variant="danger" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.gastoPorcentaje} key={1} />
                   <ProgressBar variant="warning" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.asignadoPorcentaje} key={2} />
                   <ProgressBar variant="secondary" now={presupuestoSelecionadoDetalles && presupuestoSelecionadoDetalles.restantePorcenjate} key={3} />
                 </ProgressBar>
