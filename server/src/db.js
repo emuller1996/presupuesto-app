@@ -2,6 +2,8 @@ const { Sequelize } = require("sequelize");
 const modeloPresupuesto = require("./models/Presupuesto.js");
 const modeloProyecto = require("./models/Proyecto.js");
 const modeloContracto = require("./models/Contracto.js");
+const modeloFactura = require("./models/Factura.js");
+
 
 
 
@@ -22,14 +24,15 @@ const sequelize = new Sequelize(
 modeloPresupuesto(sequelize);
 modeloProyecto(sequelize);
 modeloContracto(sequelize);
-
+modeloFactura(sequelize);
 
 
 
 const {
     Presupuesto,
     Proyecto,
-    Contracto
+    Contracto,
+    Factura
 } = sequelize.models;
 
 
@@ -39,10 +42,14 @@ Proyecto.belongsTo(Presupuesto)
 Proyecto.hasMany(Contracto)
 Contracto.belongsTo(Proyecto)
 
+Contracto.hasMany(Factura)
+Factura.belongsTo(Contracto)
+
 
 module.exports = {
     Presupuesto,
     Proyecto,
     Contracto,
+    Factura,
     db: sequelize,
 };

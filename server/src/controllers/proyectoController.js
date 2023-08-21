@@ -1,10 +1,16 @@
-const { Proyecto, Presupuesto, Contracto } = require("../db.js");
+const { Proyecto, Presupuesto, Contracto, Factura } = require("../db.js");
 
 const getProyectoById = async (req, res) => {
     try {
         const proyectoById = await Proyecto.findByPk(req.params.id)
+        const dataAdd = {
+            gastoPorcentaje: (proyectoById.montoUsado / proyectoById.montoTotal) * 100,
+            restantePorcenjate: (proyectoById.montoDisponible / proyectoById.montoTotal) * 100,
+            asignadoPorcentaje: (proyectoById.montoAsignado / proyectoById.montoTotal) * 100
+          }
+          const t = Object.assign(proyectoById.dataValues, dataAdd)
 
-        return res.status(200).json(proyectoById)
+        return res.status(200).json(t)
     } catch (error) {
         console.log(error);
         return res.status(404).json({ error: error.message })
@@ -13,9 +19,19 @@ const getProyectoById = async (req, res) => {
 
 const getContractosByProyecto = async (req, res) => {
     try {
-        const contractos = await Contracto.findAll({ where: { id: req.params.id } })
-        console.log(contractos);
+        const contractos = await Contracto.findAll({ where: { ProyectoId: req.params.id } })
         return res.status(200).json(contractos)
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+const getFacturasByProyecto = async (req, res) => {
+    const idProyecto = req.params.id
+    try {
+        const facturas = await Factura.findAll({ include: [{ model: Contracto, where: { ProyectoId: idProyecto } }] })
+        return res.status(200).json(facturas)
     } catch (error) {
         console.log(error);
 
@@ -26,7 +42,13 @@ const createContractoProyecto = async (req, res) => {
 
     const data = req.body;
     try {
+
         const contracto = await Contracto.create(data);
+        
+        const proyecto = await Proyecto.findByPk(data.ProyectoId)
+        proyecto.montoAsignado += data.monto_total;
+        proyecto.montoDisponible -= data.monto_total;
+        proyecto.save()
         return res.status(201).json({ message: "Contracto Creado!", contracto })
     } catch (error) {
         console.log(error);
@@ -41,22 +63,11 @@ const updateProyectoById = async (req, res) => {
         presu.totalAsignado -= pro.dataValues.montoTotal;
         presu.totalRestante -= pro.dataValues.montoTotal;
 
-        console.log(presu.dataValues);
-        console.log(pro.dataValues);
-
-
         const p = await Proyecto.update(data, { where: { id: req.params.id } })
-        console.log(p);
         presu.totalAsignado += data.montoTotal;
         presu.totalRestante = presu.totalCantidad - presu.totalAsignado;
 
         await presu.save();
-        console.log(presu);
-
-
-
-        console.log(p);
-
 
         return res.status(202).json({ message: "si se actualizo correctamente.", proyecto: p })
 
@@ -69,5 +80,6 @@ module.exports = {
     getProyectoById,
     updateProyectoById,
     getContractosByProyecto,
-    createContractoProyecto
+    createContractoProyecto,
+    getFacturasByProyecto
 };

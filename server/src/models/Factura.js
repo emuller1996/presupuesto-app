@@ -3,35 +3,27 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
 
     sequelize.define(
-        "Proyecto",
+        "Factura",
         {
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
             },
-            nombre: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            descripcion: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            montoDisponible: {
-                type: DataTypes.BIGINT,
-                allowNull: false,
-            },
-            montoAsignado: {
-                type: DataTypes.BIGINT,
-                allowNull: false,
-            },
             montoTotal: {
                 type: DataTypes.BIGINT,
                 allowNull: false,
             },
-            montoUsado: {
-                type: DataTypes.BIGINT,
+            estado: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+            },
+            fechaPagado: {
+                type: DataTypes.DATE,
+                allowNull: false,
+            },
+            concepto: {
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
         },

@@ -41,7 +41,7 @@ const getPresupuestoById = async (req, res) => {
 const createProyectoByPresupuesto = async (req, res) => {
   const dataProyecto = req.body;
   try {
-
+    dataProyecto.montoAsignado = 0;
     const presupuesto = await Presupuesto.findByPk(req.params.id);
     presupuesto.totalAsignado += dataProyecto.montoTotal;
     presupuesto.totalRestante -= dataProyecto.montoTotal;
