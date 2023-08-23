@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const URL_API = "http://localhost:3001";
 
 export const getAllPresupuestosService = async () => {
   try {
-    return (await axios.get(`${URL_API}/presupuestos`)).data;
+    return (await axios.get(`/presupuestos`)).data;
   } catch (error) {
     console.log(error);
     return false;
@@ -12,17 +11,17 @@ export const getAllPresupuestosService = async () => {
 };
 
 export const createPresupuestoServicio = async (data) => {
-  return await axios.post(`${URL_API}/presupuestos`,data)
+  return await axios.post(`/presupuestos`,data)
 }
 
 export const updatePresupuestoServicio = async (data) => {
-  return await axios.patch(`${URL_API}/presupuestos/${data.id}`,data)
+  return await axios.patch(`/presupuestos/${data.id}`,data)
 }
 
 export const getProyectoByIdPresupuestoService = async (id) => {
   try {
     const result = await axios.get(
-      `http://localhost:3001/presupuestos/${id}/proyectos`
+      `/presupuestos/${id}/proyectos`
     );
     return result.data;
   } catch (error) {
@@ -32,7 +31,7 @@ export const getProyectoByIdPresupuestoService = async (id) => {
 
 export const getPresupuestobyIdService = async (id) => {
   try {
-    const result = await axios.get(`http://localhost:3001/presupuestos/${id}`);
+    const result = await axios.get(`/presupuestos/${id}`);
     return result.data;
   } catch (error) {
     console.log(error);

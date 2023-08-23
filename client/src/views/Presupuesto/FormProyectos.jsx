@@ -24,7 +24,7 @@ export default function FormProyectoComponent({
     if (proyecto) {
       try {
         const result = await axios.patch(
-          `http://localhost:3001/proyectos/${proyecto.id}`,
+          `/proyectos/${proyecto.id}`,
           Object.assign(data)
         );
         console.log(result);
@@ -40,7 +40,7 @@ export default function FormProyectoComponent({
       data.montoUsado = 0;
       try {
         const result = await axios.post(
-          `http://localhost:3001/presupuestos/${presupuestoSelecionado}/proyectos`,
+          `/presupuestos/${presupuestoSelecionado}/proyectos`,
           Object.assign(data, { PresupuestoId: presupuestoSelecionado })
         );
         console.log(result);
