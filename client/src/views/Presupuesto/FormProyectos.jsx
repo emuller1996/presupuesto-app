@@ -34,6 +34,8 @@ export default function FormProyectoComponent({
         toast.success("Proyecto Actualizado Correctamente.");
       } catch (error) {
         console.log(error);
+      toast.error(error.response.data.message)
+
       }
     } else {
       data.montoDisponible = parseInt(data.montoTotal);
@@ -50,6 +52,8 @@ export default function FormProyectoComponent({
         reset();
       } catch (error) {
         console.log(error);
+      toast.error(error.response.data.message)
+
       }
     }
   };

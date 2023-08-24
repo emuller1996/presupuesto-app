@@ -7,8 +7,8 @@ const getProyectoById = async (req, res) => {
             gastoPorcentaje: (proyectoById.montoUsado / proyectoById.montoTotal) * 100,
             restantePorcenjate: (proyectoById.montoDisponible / proyectoById.montoTotal) * 100,
             asignadoPorcentaje: (proyectoById.montoAsignado / proyectoById.montoTotal) * 100
-          }
-          const t = Object.assign(proyectoById.dataValues, dataAdd)
+        }
+        const t = Object.assign(proyectoById.dataValues, dataAdd)
 
         return res.status(200).json(t)
     } catch (error) {
@@ -44,7 +44,7 @@ const createContractoProyecto = async (req, res) => {
     try {
 
         const contracto = await Contracto.create(data);
-        
+
         const proyecto = await Proyecto.findByPk(data.ProyectoId)
         proyecto.montoAsignado += data.monto_total;
         proyecto.montoDisponible -= data.monto_total;
@@ -62,8 +62,13 @@ const updateProyectoById = async (req, res) => {
         const pro = await Proyecto.findByPk(req.params.id);
         presu.totalAsignado -= pro.dataValues.montoTotal;
         presu.totalRestante -= pro.dataValues.montoTotal;
+        data.montoDisponible = data.montoTotal - (pro.dataValues.montoAsignado + pro.dataValues.montoUsado)
 
+        if (data.montoTotal < pro.dataValues.montoAsignado) {
+            return res.status(422).json({message : `el proyecto ya tiene ${pro.dataValues.montoAsignado}, no se puede cambiar el monto todal a ${data.montoTotal}`})
+        }
         const p = await Proyecto.update(data, { where: { id: req.params.id } })
+
         presu.totalAsignado += data.montoTotal;
         presu.totalRestante = presu.totalCantidad - presu.totalAsignado;
 

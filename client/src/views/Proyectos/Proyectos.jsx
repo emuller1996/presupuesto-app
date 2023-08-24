@@ -22,7 +22,7 @@ export default function ProyectosComponent() {
     try {
       setContractosAll(await getAllcontractosByProyectosService(id));
       setProyectoActual(await getProyectoById(id));
-    } catch (error) {}
+    } catch (error) { }
   };
   return (
     <div class="container mt-5">
@@ -42,52 +42,46 @@ export default function ProyectosComponent() {
                 {proyectoActual && proyectoActual.nombre}
               </h4>
               <div className="row g-3">
-              <div className="col-12">
-                <div className="d-flex justify-content-evenly">
-                  <div className="">
-                    <span>Disponible</span>
-                    <span className="px-2 bg-secondary ms-2 rounded-2"></span>
+                <div className="col-12">
+                  <div className="text-center">
+                    <p> {proyectoActual &&
+                      proyectoActual.montoTotal} </p>
                   </div>
+                  <ProgressBar className="mb-3" style={{ height: "2em" }}>
+                    <ProgressBar striped variant="danger" now={proyectoActual && proyectoActual.gastoPorcentaje} key={1} />
+                    <ProgressBar variant="warning" now={proyectoActual && proyectoActual.asignadoPorcentaje} key={2} />
+                    <ProgressBar variant="secondary" now={proyectoActual && proyectoActual.restantePorcenjate} key={3} />
+                  </ProgressBar>
 
-                  <div className="">
-                    <span>Asignado</span>
-                    <span className="px-2 bg-warning ms-2 rounded-2"></span>
-                  </div>
-
-                  <div className="">
-                    <span>Gastado / Usado </span>
-                    <span className="px-2 bg-danger ms-2 rounded-2"></span>
-                  </div>
                 </div>
-                <ProgressBar className="mb-3" style={{ height: "2em" }}>
-                  <ProgressBar striped variant="danger" now={proyectoActual && proyectoActual.gastoPorcentaje} key={1} />
-                  <ProgressBar variant="warning" now={proyectoActual && proyectoActual.asignadoPorcentaje} key={2} />
-                  <ProgressBar variant="secondary" now={proyectoActual && proyectoActual.restantePorcenjate} key={3} />
-                </ProgressBar>
-
-              </div>
                 <div className="col-md-4">
                   <span>
-                    Monto Total $
+                    Monto Asignado $
                     {proyectoActual &&
-                      proyectoActual.montoTotal.toLocaleString()}
+                      (proyectoActual.montoAsignado + proyectoActual.montoUsado)}
                   </span>
+                  <span className="px-2 bg-warning ms-2 rounded-2"></span>
+
                 </div>
 
                 <div className="col-md-4">
                   <span>
                     Monto Usado $
                     {proyectoActual &&
-                      proyectoActual.montoUsado.toLocaleString()}
+                      proyectoActual.montoUsado}
                   </span>
+                  <span className="px-2 bg-danger ms-2 rounded-2"></span>
+
                 </div>
 
                 <div className="col-md-4">
                   <span>
                     Monto Disponible $
                     {proyectoActual &&
-                      proyectoActual.montoDisponible.toLocaleString()}
+                      proyectoActual.montoDisponible}
                   </span>
+                  <span className="px-2 bg-secondary ms-2 rounded-2"></span>
+
                 </div>
 
                 <div className="col-12">
@@ -103,7 +97,7 @@ export default function ProyectosComponent() {
 
                 <div className="col-6">
                   <Link
-                    to={ proyectoActual && `/proyecto/${proyectoActual.id}/facturas`}
+                    to={proyectoActual && `/proyecto/${proyectoActual.id}/facturas`}
                     className="btn btn-warning text-white w-100 rounded-4 py-2 fw-bold"
                   >
                     <i class="fa-solid fa-coins me-3 fa-xl"></i>

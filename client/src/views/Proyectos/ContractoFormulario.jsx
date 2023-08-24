@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { crearContractoProyectosServicio } from "../../services/proyectos.servicios";
+import { toast } from "react-hot-toast";
 
 export default function ContractoFormulario({
   contracto,
@@ -28,6 +29,7 @@ export default function ContractoFormulario({
       await getAllProyectos(proyectoId);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message)
     }
   };
   return (
