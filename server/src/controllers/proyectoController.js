@@ -42,10 +42,13 @@ const createContractoProyecto = async (req, res) => {
 
     const data = req.body;
     try {
+        const proyecto = await Proyecto.findByPk(data.ProyectoId)
+        if(data.monto_total > proyecto.montoDisponible){
+            return res.status(422).json({message :`El proyecto no tiene fondos para el contracto, solo tiene disponible ${proyecto.montoDisponible}`})
+          }
 
         const contracto = await Contracto.create(data);
 
-        const proyecto = await Proyecto.findByPk(data.ProyectoId)
         proyecto.montoAsignado += data.monto_total;
         proyecto.montoDisponible -= data.monto_total;
         proyecto.save()
@@ -65,13 +68,16 @@ const updateProyectoById = async (req, res) => {
         data.montoDisponible = data.montoTotal - (pro.dataValues.montoAsignado + pro.dataValues.montoUsado)
 
         if (data.montoTotal < pro.dataValues.montoAsignado) {
-            return res.status(422).json({message : `el proyecto ya tiene ${pro.dataValues.montoAsignado}, no se puede cambiar el monto todal a ${data.montoTotal}`})
+            return res.status(422).json({message : `el proyecto ya tiene asignado ${pro.dataValues.montoAsignado}, no se puede permite esta accion.`})
         }
-        const p = await Proyecto.update(data, { where: { id: req.params.id } })
-
+        
         presu.totalAsignado += data.montoTotal;
         presu.totalRestante = presu.totalCantidad - presu.totalAsignado;
-
+        if(presu.totalRestante < 0 ){
+            return res.status(422).json({message : `El presuesto no tiene fondos para actualizar el proyecto.`})
+        }
+        
+        const p = await Proyecto.update(data, { where: { id: req.params.id } })
         await presu.save();
 
         return res.status(202).json({ message: "si se actualizo correctamente.", proyecto: p })

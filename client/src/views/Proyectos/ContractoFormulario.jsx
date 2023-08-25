@@ -16,14 +16,14 @@ export default function ContractoFormulario({
   } = useForm();
   const onSubmit = async (data) => {
     data.monto_total = parseInt(data.monto_total);
+    data.monto_disponible = parseInt(data.monto_total);
     data.ProyectoId = parseInt(proyectoId);
     data.fecha_creado = new Date().toISOString();
 
-    console.log(Object.assign(data, { monto_usado: 0, monto_disponible: 0 }));
 
     try {
       await crearContractoProyectosServicio(
-        Object.assign(data, { monto_usado: 0, monto_disponible: 0 })
+        Object.assign(data, { monto_usado: 0 })
       );
       reset()
       await getAllProyectos(proyectoId);

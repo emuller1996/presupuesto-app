@@ -43,6 +43,9 @@ const createProyectoByPresupuesto = async (req, res) => {
   try {
     dataProyecto.montoAsignado = 0;
     const presupuesto = await Presupuesto.findByPk(req.params.id);
+    if(dataProyecto.montoTotal > presupuesto.totalRestante){
+      return res.status(422).json({message :`El presupuesto no tiene fondos para el proyecto, solo tiene disponible ${presupuesto.totalRestante}`})
+    }
     presupuesto.totalAsignado += dataProyecto.montoTotal;
     presupuesto.totalRestante -= dataProyecto.montoTotal;
     presupuesto.save()

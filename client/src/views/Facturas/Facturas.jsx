@@ -4,6 +4,7 @@ import { getProyectoById } from "../../services/proyectos.servicios";
 import Modal from "react-bootstrap/Modal";
 import FormFacturas from "./FormFacturas";
 import { getFacturasByProyectoService } from "../../services/facturas.services";
+import { MostrarDinero } from "../../utils";
 
 export default function FacturasComponent() {
   const [proyectoActual, setProyectoActual] = useState(undefined);
@@ -72,14 +73,14 @@ export default function FacturasComponent() {
                         </div>
                         <div className="col-12 text-center">
                           <span class="badge bg-secondary fs-5 rounded-3">
-                          {`${f.estado}`}
+                            {`${f.estado}`}
                           </span>
                         </div>
                         <div className="col-6 ">
                           <span class=" fs-5">{`${f.Contracto && f.Contracto.nombre}`}</span>
                         </div>
                         <div className="col-6 ">
-                          <span class=" fs-5">{f.montoTotal}</span>
+                          <span class=" fs-5">{MostrarDinero(f.montoTotal)}</span>
                         </div>
                       </div>
                     </div>
@@ -97,7 +98,7 @@ export default function FacturasComponent() {
           <Modal.Title>Crear Factura</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormFacturas setShow={setShow} />
+          <FormFacturas getFacturasTodasByProyecto={getFacturasTodasByProyecto} setShow={setShow} />
         </Modal.Body>
       </Modal>
     </div>

@@ -8,6 +8,7 @@ import {
 import ContractoFormulario from "./ContractoFormulario";
 import ProgressBar from "react-bootstrap/esm/ProgressBar";
 import { toast } from "react-hot-toast";
+import { MostrarDinero } from "../../utils";
 
 export default function ProyectosComponent() {
   const [proyectoActual, setProyectoActual] = useState(undefined);
@@ -45,7 +46,7 @@ export default function ProyectosComponent() {
                 <div className="col-12">
                   <div className="text-center">
                     <p> {proyectoActual &&
-                      proyectoActual.montoTotal} </p>
+                      MostrarDinero(proyectoActual.montoTotal)} </p>
                   </div>
                   <ProgressBar className="mb-3" style={{ height: "2em" }}>
                     <ProgressBar striped variant="danger" now={proyectoActual && proyectoActual.gastoPorcentaje} key={1} />
@@ -56,9 +57,9 @@ export default function ProyectosComponent() {
                 </div>
                 <div className="col-md-4">
                   <span>
-                    Monto Asignado $
+                    Monto Asignado :
                     {proyectoActual &&
-                      (proyectoActual.montoAsignado + proyectoActual.montoUsado)}
+                      MostrarDinero((proyectoActual.montoAsignado + proyectoActual.montoUsado))}
                   </span>
                   <span className="px-2 bg-warning ms-2 rounded-2"></span>
 
@@ -66,9 +67,9 @@ export default function ProyectosComponent() {
 
                 <div className="col-md-4">
                   <span>
-                    Monto Usado $
+                    Monto Usado :
                     {proyectoActual &&
-                      proyectoActual.montoUsado}
+                      MostrarDinero(proyectoActual.montoUsado)}
                   </span>
                   <span className="px-2 bg-danger ms-2 rounded-2"></span>
 
@@ -76,9 +77,9 @@ export default function ProyectosComponent() {
 
                 <div className="col-md-4">
                   <span>
-                    Monto Disponible $
+                    Monto Disponible :
                     {proyectoActual &&
-                      proyectoActual.montoDisponible}
+                      MostrarDinero(proyectoActual.montoDisponible)}
                   </span>
                   <span className="px-2 bg-secondary ms-2 rounded-2"></span>
 
@@ -113,7 +114,7 @@ export default function ProyectosComponent() {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th width="450px">Nombre</th>
+                  <th width="300px">Nombre</th>
                   <th>Monto Total</th>
                   <th>Monto Disponible</th>
                   <th>Monto Usado</th>
@@ -134,9 +135,9 @@ export default function ProyectosComponent() {
                     <tr>
                       <td>{c.id}</td>
                       <td>{c.nombre}</td>
-                      <td>{c.monto_total}</td>
-                      <td>{c.monto_disponible}</td>
-                      <td>{c.monto_usado}</td>
+                      <td>{MostrarDinero(c.monto_total)}</td>
+                      <td>{MostrarDinero(c.monto_disponible)}</td>
+                      <td>{MostrarDinero(c.monto_usado)}</td>
                       <td>
                         <div
                           class="btn-group rounded-4"

@@ -12,6 +12,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import { deleteProyectoServicio } from "../../services/proyectos.servicios";
 import { toast } from "react-hot-toast";
 import FormPresupuestoComponent from "./FormPresupuesto";
+import { MostrarDinero } from "../../utils";
 
 export default function PresupuestoComponent(props) {
   const [presupuestosTodos, setPresupuestosTodos] = useState([]);
@@ -172,11 +173,8 @@ export default function PresupuestoComponent(props) {
                       <h4 class="card-title">Valor Total</h4>
                       <p class="card-text">
                         {presupuestoSelecionadoDetalles &&
-                          new Intl.NumberFormat("en-IN", {
-                            maximumSignificantDigits: 3,
-                          }).format(
-                            presupuestoSelecionadoDetalles.totalCantidad
-                          )}
+                          MostrarDinero(presupuestoSelecionadoDetalles.totalCantidad)
+                        }
                       </p>
                     </div>
                   </div>
@@ -185,11 +183,7 @@ export default function PresupuestoComponent(props) {
                       <h4 class="card-title">Valor Restante</h4>
                       <p class="card-text">
                         {presupuestoSelecionadoDetalles &&
-                          new Intl.NumberFormat("de-DE", {
-                            maximumSignificantDigits: 3,
-                          }).format(
-                            presupuestoSelecionadoDetalles.totalRestante
-                          )}
+                          MostrarDinero(presupuestoSelecionadoDetalles.totalRestante)}
                       </p>
                     </div>
                   </div>
@@ -198,9 +192,7 @@ export default function PresupuestoComponent(props) {
                       <h4 class="card-title">Valor Ocupado</h4>
                       <p class="card-text">
                         {presupuestoSelecionadoDetalles &&
-                          new Intl.NumberFormat("de-DE", {
-                            maximumSignificantDigits: 3,
-                          }).format(presupuestoSelecionadoDetalles.totalGasto)}
+                          MostrarDinero(presupuestoSelecionadoDetalles.totalGasto)}
                       </p>
                     </div>
                   </div>
@@ -253,9 +245,7 @@ export default function PresupuestoComponent(props) {
                           <td>{p.nombre}</td>
                           <td>{p.descripcion}</td>
                           <td>
-                            {new Intl.NumberFormat("de-DE", {
-                              maximumSignificantDigits: 3,
-                            }).format(p.montoTotal)}
+                            {MostrarDinero(p.montoTotal)}
                           </td>
                           <td>
                             <div

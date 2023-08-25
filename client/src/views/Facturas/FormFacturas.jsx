@@ -7,7 +7,8 @@ import { useParams } from "react-router-dom";
 import { getAllcontractosByProyectosService } from "../../services/proyectos.servicios";
 
 export default function FormFacturas({
-    setShow
+    setShow,
+    getFacturasTodasByProyecto,
 }) {
 
     const [contractos, setContractos] = useState(undefined)
@@ -34,9 +35,11 @@ export default function FormFacturas({
         console.log(data);
         try {
             await createFacturaService(data);
-            setShow(false)
+            await getFacturasTodasByProyecto(id)
             reset()
+            setShow(false)
         } catch (error) {
+            toast.error(error.response.data.message)
 
         }
 
