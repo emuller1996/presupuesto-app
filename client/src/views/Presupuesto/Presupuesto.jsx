@@ -68,8 +68,10 @@ export default function PresupuestoComponent(props) {
       <div class="card text-start">
         <div class="card-body">
           <p class="card-text">
-            <div className="d-flex justify-content-between">
-              <div class="input-group me-3 w-100">
+            <div className="row g-2">
+              <div class="col-md-9">
+                <div className="d-flex">
+
                 <button
                   class="btn btn-success me-3"
                   type="button"
@@ -83,7 +85,7 @@ export default function PresupuestoComponent(props) {
                   onChange={(e) => {
                     setPresupuestoSelecionado(e.value);
                   }}
-                  className="w-50"
+                  className="w-75"
                   theme={(theme) => ({
                     ...theme,
                     borderRadius: 0,
@@ -116,7 +118,8 @@ export default function PresupuestoComponent(props) {
                   }}
                   options={presupuestosTodos}
                 />
-                <button
+                </div>
+                {/* <button
                   class="btn btn-warning text-white ms-3"
                   type="button"
                   id="button-addon2"
@@ -125,11 +128,12 @@ export default function PresupuestoComponent(props) {
                 >
                   <i class="fa-solid fa-circle-dollar-to-slot me-2"></i>
                   Editar Presupuesto
-                </button>
+                </button> */}
               </div>
+              <div className="col-md-3 text-md-end text-center">
 
               <button
-                class="btn btn-info text-white shadow-sm"
+                class="btn btn-info text-white shadow-sm w-100 py-2"
                 type="button"
                 id="button-addon2"
                 data-bs-toggle="modal"
@@ -139,6 +143,8 @@ export default function PresupuestoComponent(props) {
                 <i class="fa-solid fa-circle-plus fa-xl me-2"></i>
                 Agregar Proyecto
               </button>
+              </div>
+
             </div>
 
             <div className="row mt-3 g-3">
