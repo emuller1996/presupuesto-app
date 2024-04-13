@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 import { ViewDollar } from "../../../utils";
 export default function CardProyecto({ proyecto }) {
   return (
-    <div className="border border-blue-300 rounded-md  p-4 hover:border-blue-400 hover:shadow-md hover:shadow-blue-100">
-      <p className="text-start text-blue-700 font-semibold text-xl">
+    <div className="border border-orange-300 rounded-md  p-4 hover:border-orange-400 hover:shadow-md hover:shadow-orange-100">
+      <p className="text-start text-orange-700 font-semibold text-xl">
         {proyecto?.nombre}
       </p>
-      <div className="text-blue-900">
+      <hr className="border my-2 border-orange-300" />
+      <div className="text-orange-900">
       <div className="flex justify-between">
           <span>Presupuesto</span>
           <span className="font-semibold">
@@ -38,7 +39,7 @@ export default function CardProyecto({ proyecto }) {
           Total Asignado
           {proyecto?.asignadoPorcentaje}
         </span>
-        <span className="text-sm font-medium text-blue-700 dark:text-white">
+        <span className="text-sm font-medium text-orange-700 dark:text-white">
           {`${parseInt(
             (proyecto?.montoAsignado / proyecto?.montoTotal) * 100
           )}%`}
@@ -78,7 +79,7 @@ export default function CardProyecto({ proyecto }) {
       <div className="text-center mt-4">
         <button
           type="button"
-          className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
         >
           Detalle
         </button>

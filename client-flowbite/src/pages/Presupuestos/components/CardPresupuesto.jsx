@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import { ViewDollar } from "../../../utils";
+import { Link } from "react-router-dom";
+
 export default function CardPresupuesto({ presupuesto }) {
   return (
     <div className="border border-blue-300 rounded-md  p-4 hover:border-blue-400 hover:shadow-md hover:shadow-blue-100">
@@ -28,7 +30,6 @@ export default function CardPresupuesto({ presupuesto }) {
       <div className="flex justify-between mb-1">
         <span className="text-base font-medium text-blue-700 dark:text-white">
           Total Asignado
-          {presupuesto?.asignadoPorcentaje}
         </span>
         <span className="text-sm font-medium text-blue-700 dark:text-white">
           {`${parseInt(
@@ -49,7 +50,6 @@ export default function CardPresupuesto({ presupuesto }) {
       <div className="flex justify-between mb-1">
         <span className="text-base font-medium text-red-700 dark:text-white">
           Total Gastado
-          {presupuesto?.asignadoPorcentaje}
         </span>
         <span className="text-sm font-medium text-red-700 dark:text-white">
           {`${parseInt(
@@ -68,12 +68,13 @@ export default function CardPresupuesto({ presupuesto }) {
         ></div>
       </div>
       <div className="text-center mt-4">
-        <button
+        <Link
+          to={`/presupuesto/${presupuesto.id}`}
           type="button"
           className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
         >
           Detalle
-        </button>
+        </Link>
       </div>
     </div>
   );

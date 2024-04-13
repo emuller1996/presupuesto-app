@@ -20,7 +20,7 @@ export const updatePresupuestoServicio = async (data) => {
 export const getProyectoByIdPresupuestoService = async (id) => {
   try {
     const result = await axios.get(`/presupuestos/${id}/proyectos`);
-    return result.data;
+    return result
   } catch (error) {
     console.log(error);
   }
@@ -29,7 +29,7 @@ export const getProyectoByIdPresupuestoService = async (id) => {
 export const getPresupuestobyIdService = async (id) => {
   try {
     const result = await axios.get(`/presupuestos/${id}`);
-    return result.data;
+    return result
   } catch (error) {
     console.log(error);
   }
