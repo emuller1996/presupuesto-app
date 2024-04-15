@@ -10,7 +10,7 @@ const PresupuestoDetalle = React.lazy(() =>
 
 
 const routes = [
-  { path: "/presupuestos", name: "", element: PresupuestosPages },
+  { path: "/presupuesto", name: "", element: PresupuestosPages },
   { path: "/presupuesto/:idPresupuesto", name: "", element: PresupuestoDetalle },
   { path: "/proyectos", name: "", element: ProyectosPages },
 

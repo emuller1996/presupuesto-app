@@ -37,10 +37,6 @@ export default function AppNavbar() {
               </span>
             </a>
           </div>
-            <div className="text-center">
-
-            sss
-            </div>
           <div className="flex items-center">
             <div className="flex items-center ms-3">
               <div>
