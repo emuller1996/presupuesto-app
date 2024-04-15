@@ -8,7 +8,7 @@ export default function CardProyecto({ proyecto }) {
       </p>
       <hr className="border my-2 border-orange-300" />
       <div className="text-orange-900">
-      <div className="flex justify-between">
+      <div className="flex flex-wrap justify-between">
           <span>Presupuesto</span>
           <span className="font-semibold">
             {proyecto?.Presupuesto?.descripcion}
@@ -55,14 +55,13 @@ export default function CardProyecto({ proyecto }) {
           }}
         ></div>
       </div>
-      {/*<div className="flex justify-between mb-1">
+      <div className="flex justify-between mb-1">
         <span className="text-base font-medium text-red-700 dark:text-white">
           Total Gastado
-          {presupuesto?.asignadoPorcentaje}
         </span>
         <span className="text-sm font-medium text-red-700 dark:text-white">
           {`${parseInt(
-            (presupuesto?.totalGasto / presupuesto?.totalCantidad) * 100
+            (proyecto?.montoUsado / proyecto?.montoTotal) * 100
           )}%`}
         </span>
       </div>
@@ -71,11 +70,11 @@ export default function CardProyecto({ proyecto }) {
           className="bg-red-600 h-2.5 rounded-full"
           style={{
             width: `${
-              (presupuesto?.totalGasto / presupuesto?.totalCantidad) * 100
+              (proyecto?.montoUsado / proyecto?.montoTotal) * 100
             }%`,
           }}
         ></div>
-      </div> */}
+      </div>
       <div className="text-center mt-4">
         <button
           type="button"

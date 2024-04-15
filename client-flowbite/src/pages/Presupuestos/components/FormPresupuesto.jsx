@@ -1,13 +1,9 @@
 import { useForm } from "react-hook-form";
 import { createPresupuestoServicio } from "../../../../../client/src/services/presupuesto.servicios";
+import PropTypes from "prop-types";
 
 export default function FormPresupuesto({ getAllPresupuesto }) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
     data.totalCantidad = parseInt(data.totalCantidad);
@@ -26,7 +22,7 @@ export default function FormPresupuesto({ getAllPresupuesto }) {
     console.log(data);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="">
       <div className="mb-3">
         <label
           htmlFor="descripcion"
@@ -66,3 +62,6 @@ export default function FormPresupuesto({ getAllPresupuesto }) {
     </form>
   );
 }
+FormPresupuesto.propTypes = {
+  getAllPresupuesto: PropTypes.func.isRequired,
+};

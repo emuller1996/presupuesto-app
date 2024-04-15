@@ -13,7 +13,7 @@ export default function ProyectosPages() {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         
-        {data && data.map((c) => <CardProyecto key={c} proyecto={c} />)}
+        {data && data.map((c) => <CardProyecto key={c.id} proyecto={c} />)}
       </div>
     </div>
   );
