@@ -1,25 +1,39 @@
 import { useForm } from "react-hook-form";
-import { createPresupuestoServicio } from "../../../../../client/src/services/presupuesto.servicios";
 import PropTypes from "prop-types";
+import { createPresupuestoServicio } from "../../../services/presupuesto.servicios";
 
-export default function FormPresupuesto({ getAllPresupuesto }) {
+export default function FormPresupuesto({ getAllPresupuesto, presupuesto }) {
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
     data.totalCantidad = parseInt(data.totalCantidad);
-    data.totalGasto = 0;
-    data.totalGastoPorcentaje = 0;
-    data.totalRestante = data.totalCantidad;
-    console.log(data);
+    if (!presupuesto) {
+      data.totalGasto = 0;
+      data.totalGastoPorcentaje = 0;
+      data.totalRestante = data.totalCantidad;
+      console.log(data);
 
-    try {
-      await createPresupuestoServicio(data);
-      await getAllPresupuesto();
-      reset();
-    } catch (error) {
-      console.log(error);
+      try {
+        const r = await createPresupuestoServicio(data);
+        getAllPresupuesto();
+        reset();
+        console.log(r.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log(data);
+      /*  data.id = presupuesto.id;
+      try {
+        await updatePresupuestoServicio(data);
+        getPresupuestobyId(data.id);
+        getPresupuestosTodos();
+        toast.success("Presupuesto actualizado correctamente.");
+        setShowModalPresupuesto(false);
+      } catch (error) {
+        toast.error(error.message);
+      } */
     }
-    console.log(data);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
@@ -64,4 +78,5 @@ export default function FormPresupuesto({ getAllPresupuesto }) {
 }
 FormPresupuesto.propTypes = {
   getAllPresupuesto: PropTypes.func.isRequired,
+  presupuesto: PropTypes.object,
 };
