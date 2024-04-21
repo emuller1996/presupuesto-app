@@ -1,8 +1,13 @@
-const { Proyecto, Presupuesto, Contracto, Factura } = require("../db.js");
+import jwtDecode from "jwt-decode";
+import { Proyecto, Presupuesto, Contracto, Factura } from "../db.js";
 
 const getAllProyectos = async (req, res) => {
   try {
-    const proyectos = await Proyecto.findAll({ include: [Presupuesto] });
+    const token = req.headers[`access-token`];
+    const decoded = jwtDecode(token);
+    const proyectos = await Proyecto.findAll({
+      include: [{ model: Presupuesto, where: { UsuarioId: decoded.id } }],
+    });
 
     return res.status(200).json(proyectos);
   } catch (error) {
@@ -110,7 +115,7 @@ const updateProyectoById = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getProyectoById,
   updateProyectoById,
   getContractosByProyecto,

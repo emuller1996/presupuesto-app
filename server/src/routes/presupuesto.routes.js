@@ -1,12 +1,6 @@
-const { Router } = require("express");
-const {
-  getTodosPresupuesto,
-  createPresupuesto,
-  getPresupuestoById,
-  createProyectoByPresupuesto,
-  getProyectoByPresupuesto,
-} = require("../controllers/presupuestoController.js");
-const { Presupuesto } = require("../db.js");
+import { Router } from "express";
+import { getTodosPresupuesto, createPresupuesto, getPresupuestoById, createProyectoByPresupuesto, getProyectoByPresupuesto } from "../controllers/presupuestoController.js";
+import { Presupuesto } from "../db.js";
 
 const presupuestoRouter = Router();
 
@@ -40,4 +34,4 @@ presupuestoRouter.patch("/:id", async (req, res) => {
   }
 });
 
-module.exports = presupuestoRouter;
+export default presupuestoRouter;

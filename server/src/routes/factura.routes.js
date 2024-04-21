@@ -1,20 +1,26 @@
-const { Router } = require("express");
-const { createFactura } = require("../controllers/facturaController.js");
-const { Factura, Contracto, Proyecto } = require("../db.js");
-const { Sequelize, Op } = require("sequelize");
+import { Router } from "express";
+import { createFactura } from "../controllers/facturaController.js";
+import { Factura, Contracto, Proyecto, Presupuesto } from "../db.js";
+import { Sequelize, Op } from "sequelize";
+import jwtDecode from "jwt-decode";
 
 const FacturaRouter = Router();
 
 FacturaRouter.post("/", createFactura);
 FacturaRouter.get("/", async (req, res) => {
+  const token = req.headers[`access-token`];
+  const decoded = jwtDecode(token);
   try {
     const facturas = await Factura.findAll({
       include: [
         {
           model: Contracto,
-          include: Proyecto,
+          include: { model: Proyecto, include: Presupuesto },
         },
       ],
+      where: {
+        "$Contracto.Proyecto.Presupuesto.UsuarioId$": { [Op.eq]: decoded.id },
+      },
     });
     return res.status(200).json(facturas);
   } catch (error) {
@@ -24,6 +30,8 @@ FacturaRouter.get("/", async (req, res) => {
 });
 FacturaRouter.get("/last-15-days", async (req, res) => {
   const fechasUltimos15Dias = [];
+  const token = req.headers[`access-token`];
+  const decoded = jwtDecode(token);
 
   // Generar las fechas de los últimos 15 días y agregarlas al array
   for (let i = 0; i < 15; i++) {
@@ -34,31 +42,39 @@ FacturaRouter.get("/last-15-days", async (req, res) => {
     const fechaEspecifica = new Date(p);
 
     // Obtener la fecha de inicio del día
-    const fechaInicioDia =fechaEspecifica.toISOString().substring(0,10)+"T00:00:00.000Z";
+    const fechaInicioDia =
+      fechaEspecifica.toISOString().substring(0, 10) + "T00:00:00.000Z";
     // Obtener la fecha de fin del día
 
-    const fechaFinDia =fechaEspecifica.toISOString().substring(0,10)+"T23:59:59.999Z";
+    const fechaFinDia =
+      fechaEspecifica.toISOString().substring(0, 10) + "T23:59:59.999Z";
 
     /* const fechaFinDia = new Date(fechaEspecifica);
     fechaFinDia.setHours(23 , 59, 59, 999); */
     console.log(fechaInicioDia, fechaFinDia);
 
-    result = await Factura.findOne({
+    const result = await Factura.findOne({
       attributes: [
         [Sequelize.fn("DATE", Sequelize.col("fechaPagado")), "time"], // Obtener solo la fecha (sin la hora)
-        [Sequelize.fn("SUM", Sequelize.col("montoTotal")), "value"], // Obtener la suma del monto de los pagos
+        [Sequelize.fn("SUM", Sequelize.col("Factura.montoTotal")), "value"], // Obtener la suma del monto de los pagos
       ],
-
+      include: [
+        {
+          model: Contracto,
+          include: { model: Proyecto, include: Presupuesto },
+        },
+      ],
       where: {
         fechaPagado: {
           [Sequelize.Op.gte]: fechaInicioDia,
           [Sequelize.Op.lt]: fechaFinDia,
         },
+        "$Contracto.Proyecto.Presupuesto.UsuarioId$": { [Op.eq]: decoded.id },
       },
     });
     if (result.dataValues.time === null) {
       return {
-        time: fechaEspecifica.toISOString().substring(0,10),
+        time: fechaEspecifica.toISOString().substring(0, 10),
         value: 0,
         dataValues: { time: fechaEspecifica },
       };
@@ -110,4 +126,4 @@ function getFechaAtras(n) {
   return fecha;
 }
 
-module.exports = FacturaRouter;
+export default FacturaRouter;

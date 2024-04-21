@@ -1,12 +1,5 @@
-const { Router } = require("express");
-const {
-  getProyectoById,
-  updateProyectoById,
-  getContractosByProyecto,
-  createContractoProyecto,
-  getFacturasByProyecto,
-  getAllProyectos,
-} = require("../controllers/proyectoController.js");
+import { Router } from "express";
+import { getProyectoById, updateProyectoById, getContractosByProyecto, createContractoProyecto, getFacturasByProyecto, getAllProyectos } from "../controllers/proyectoController.js";
 
 const proyectoRouter = Router();
 
@@ -20,4 +13,4 @@ proyectoRouter.post("/:id/contractos", createContractoProyecto);
 
 proyectoRouter.patch("/:id", updateProyectoById);
 
-module.exports = proyectoRouter;
+export default proyectoRouter;

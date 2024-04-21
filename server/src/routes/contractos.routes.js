@@ -1,12 +1,29 @@
-const { Router } = require("express");
-const { Contracto, Proyecto, Presupuesto } = require("../db");
+import { Router } from "express";
+import { Contracto, Proyecto, Presupuesto, Usuario } from "../db.js";
+import jwtDecode from "jwt-decode";
+import { Op, Sequelize } from "sequelize";
 
 const contractoRouter = Router();
 
 contractoRouter.get("/", async (req, res) => {
+  const token = req.headers[`access-token`];
+  const decoded = jwtDecode(token);
   try {
     const contractosAll = await Contracto.findAll({
-      include: [{ model: Proyecto, include: [Presupuesto] }],
+      include: [
+        {
+          model: Proyecto,
+          include: [
+            {
+              model: Presupuesto,
+              required: true,
+            },
+          ],
+        },
+      ],
+      where :{
+        '$Proyecto.Presupuesto.UsuarioId$': { [Op.eq]: decoded.id },
+      }
     });
 
     return res.status(200).json(contractosAll);
@@ -16,4 +33,4 @@ contractoRouter.get("/", async (req, res) => {
   }
 });
 
-module.exports = contractoRouter;
+export default contractoRouter;
