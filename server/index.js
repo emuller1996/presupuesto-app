@@ -1,7 +1,7 @@
 import server from "./src/app.js";
 import { db } from "./src/db.js";
 
-db.sync({ force: false }).then(() => {
+db.sync({ force: true }).then(() => {
   console.log("Database sync");
 });
 

@@ -5,8 +5,8 @@ import modeloContracto from "./models/Contracto.js";
 import modeloFactura from "./models/Factura.js";
 import modelUser from "./models/Usuario.js";
 
-import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 
 dotenv.config();
 

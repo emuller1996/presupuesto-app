@@ -52,4 +52,4 @@ const authRegister = async (req, res) => {
     console.log(error);
   }
 };
-export { authUser, authRegister };
+export { authUser, authRegister , generateAccessToken};
