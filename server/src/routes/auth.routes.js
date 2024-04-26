@@ -1,5 +1,8 @@
 import { Router } from "express";
+import dotenv from "dotenv";
 
+dotenv.config();
+const { URL_FRONT } = process.env;
 
 import {
   authUser,
@@ -46,7 +49,7 @@ authRouter.get(
       <body>
       </body>
       <script>
-        window.opener.postMessage(${user}, 'http://localhost:5173')
+        window.opener.postMessage(${user}, '${URL_FRONT}')
       </script>
     </html>`);
       /* return res.status(200).header("authorization", accessToken).json({

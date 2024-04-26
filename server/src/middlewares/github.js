@@ -2,8 +2,8 @@ import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github";
 import dotenv from "dotenv";
 
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRETS, URL_CALLBACK } = process.env;
 dotenv.config();
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRETS, URL_CALLBACK } = process.env;
 
 passport.use(
   "git-hub",
