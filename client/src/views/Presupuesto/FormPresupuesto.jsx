@@ -1,14 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { createPresupuestoServicio, updatePresupuestoServicio } from "../../services/presupuesto.servicios";
+import {
+  createPresupuestoServicio,
+  updatePresupuestoServicio,
+} from "../../services/presupuesto.servicios";
 import { toast } from "react-hot-toast";
+import { useContext } from "react";
 
 export default function FormPresupuestoComponent({
   presupuesto,
   setShowModalPresupuesto,
   getPresupuestosTodos,
   getPresupuestobyId,
-  
 }) {
   const {
     register,
@@ -16,9 +19,8 @@ export default function FormPresupuestoComponent({
     formState: { errors },
     reset,
   } = useForm();
-
   const onSubmit = async (data) => {
-      data.totalCantidad = parseInt(data.totalCantidad);
+    data.totalCantidad = parseInt(data.totalCantidad);
     if (!presupuesto) {
       data.totalGasto = 0;
       data.totalGastoPorcentaje = 0;
@@ -26,7 +28,7 @@ export default function FormPresupuestoComponent({
       console.log(data);
 
       try {
-        await createPresupuestoServicio(data);
+        await createPresupuestoServicio(data, token);
         toast.success("Presupuesto creado correctamente.");
         getPresupuestosTodos();
         reset();
@@ -38,13 +40,13 @@ export default function FormPresupuestoComponent({
       console.log(data);
       data.id = presupuesto.id;
       try {
-        await updatePresupuestoServicio(data);
-        getPresupuestobyId(data.id)
+        await updatePresupuestoServicio(data,token);
+        getPresupuestobyId(data.id);
         getPresupuestosTodos();
         toast.success("Presupuesto actualizado correctamente.");
         setShowModalPresupuesto(false);
       } catch (error) {
-        toast.error(error.message)
+        toast.error(error.message);
       }
     }
   };

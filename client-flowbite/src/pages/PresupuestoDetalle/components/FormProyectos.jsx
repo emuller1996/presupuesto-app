@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../../../context/AuthContext";
 
 export default function FormProyectoComponent({
   presupuestoSelecionado,
@@ -11,6 +12,8 @@ export default function FormProyectoComponent({
 }) {
   const { register, handleSubmit, reset } = useForm();
   const [isLoading, setisLoading] = useState(false);
+  const { token } = useContext(AuthContext);
+
   const [messageSuccess, setMessageSuccess] = useState(null);
   const onSubmit = async (data) => {
     data.montoTotal = parseInt(data.montoTotal);
@@ -22,7 +25,10 @@ export default function FormProyectoComponent({
         setisLoading(true);
         const result = await axios.patch(
           `/proyectos/${proyecto.id}`,
-          Object.assign(data)
+          Object.assign(data),
+          {
+            headers: { "access-token": token },
+          }
         );
         console.log(result);
         await getProyectoByIdPresupuesto(presupuestoSelecionado);
@@ -43,7 +49,10 @@ export default function FormProyectoComponent({
 
         const result = await axios.post(
           `/presupuestos/${presupuestoSelecionado}/proyectos`,
-          Object.assign(data, { PresupuestoId: presupuestoSelecionado })
+          Object.assign(data, { PresupuestoId: presupuestoSelecionado }),
+          {
+            headers: { "access-token": token },
+          }
         );
         console.log(result);
         await getProyectoByIdPresupuesto(presupuestoSelecionado);

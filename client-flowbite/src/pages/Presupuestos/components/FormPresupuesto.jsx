@@ -1,9 +1,21 @@
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { createPresupuestoServicio } from "../../../services/presupuesto.servicios";
+import {
+  createPresupuestoServicio,
+  updatePresupuestoServicio,
+} from "../../../services/presupuesto.servicios";
+import CurrencyInput from "react-currency-input-field";
+import { useContext } from "react";
+import AuthContext from "../../../context/AuthContext";
 
-export default function FormPresupuesto({ getAllPresupuesto, presupuesto }) {
-  const { register, handleSubmit, reset } = useForm();
+
+export default function FormPresupuesto({
+  getAllPresupuesto,
+  presupuesto,
+  setShow,
+}) {
+  const { register, handleSubmit, reset, setValue } = useForm();
+  const { token } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     data.totalCantidad = parseInt(data.totalCantidad);
@@ -14,25 +26,27 @@ export default function FormPresupuesto({ getAllPresupuesto, presupuesto }) {
       console.log(data);
 
       try {
-        const r = await createPresupuestoServicio(data);
+        const r = await createPresupuestoServicio(data,token);
         getAllPresupuesto();
         reset();
         console.log(r.data);
+        setShow(false);
       } catch (error) {
         console.log(error);
       }
     } else {
       console.log(data);
-      /*  data.id = presupuesto.id;
+      data.id = presupuesto.id;
+      if (!data.totalCantidad) {
+        data.totalCantidad = presupuesto.totalCantidad;
+      }
       try {
-        await updatePresupuestoServicio(data);
-        getPresupuestobyId(data.id);
-        getPresupuestosTodos();
-        toast.success("Presupuesto actualizado correctamente.");
-        setShowModalPresupuesto(false);
+        await updatePresupuestoServicio(data,token);
+        getAllPresupuesto();
+        setShow(false);
       } catch (error) {
-        toast.error(error.message);
-      } */
+        console.log(error);
+      }
     }
   };
   return (
@@ -47,6 +61,7 @@ export default function FormPresupuesto({ getAllPresupuesto, presupuesto }) {
         <input
           type="text"
           id="descripcion"
+          defaultValue={presupuesto?.descripcion}
           {...register("descripcion", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
@@ -58,11 +73,24 @@ export default function FormPresupuesto({ getAllPresupuesto, presupuesto }) {
         >
           Valor del Presupuesto.
         </label>
-        <input
+        {/* <input
           type="number"
           id="totalCantidad"
           {...register("totalCantidad", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        /> */}
+        <CurrencyInput
+          id="totalCantidad"
+          name="totalCantidad"
+          required
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          defaultValue={presupuesto?.totalCantidad}
+          decimalsLimit={2}
+          decimalSeparator=","
+          groupSeparator="."
+          onValueChange={(value) => {
+            setValue("totalCantidad", value);
+          }}
         />
       </div>
       <div className="mt-4 text-center">
@@ -79,4 +107,5 @@ export default function FormPresupuesto({ getAllPresupuesto, presupuesto }) {
 FormPresupuesto.propTypes = {
   getAllPresupuesto: PropTypes.func.isRequired,
   presupuesto: PropTypes.object,
+  setShow: PropTypes.func,
 };

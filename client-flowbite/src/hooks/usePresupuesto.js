@@ -1,10 +1,15 @@
-import { useState } from "react";
-import { getAllPresupuestosService, getPresupuestobyIdService, getProyectoByIdPresupuestoService } from "../services/presupuesto.servicios";
+import { useContext, useState } from "react";
+import {
+  getAllPresupuestosService,
+  getPresupuestobyIdService,
+  getProyectoByIdPresupuestoService,
+} from "../services/presupuesto.servicios";
+import AuthContext from "../context/AuthContext";
 export const usePresupuesto = () => {
   const [data, setData] = useState([]);
   const [dataDetail, setDataDetail] = useState({});
-  const [Proyectos, setProyectos] = useState(null)
-
+  const [Proyectos, setProyectos] = useState(null);
+  const { token } = useContext(AuthContext);
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,7 +20,7 @@ export const usePresupuesto = () => {
   const getAllPresupuesto = async () => {
     setLoading(true);
     try {
-      const res = await getAllPresupuestosService();
+      const res = await getAllPresupuestosService(token);
       if (res.status !== 200) {
         let err = new Error("Error en la petición Fetch");
         err.status = res.status || "00";
@@ -45,15 +50,13 @@ export const usePresupuesto = () => {
 
     try {
       setDataDetail(null);
-      const result = await getPresupuestobyIdService(id);
+      const result = await getPresupuestobyIdService(id, token);
       console.log();
       setDataDetail(result.data);
       setLoading(false);
-
     } catch (error) {
       console.log(error);
       setLoading(false);
-
     }
   };
 
@@ -62,14 +65,16 @@ export const usePresupuesto = () => {
 
     try {
       setDataDetail(null);
-      const result = await getProyectoByIdPresupuestoService(idPresupuesto);
+      const result = await getProyectoByIdPresupuestoService(
+        idPresupuesto,
+        token
+      );
       console.log();
       setProyectos(result.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
-
     }
   };
 
@@ -81,6 +86,6 @@ export const usePresupuesto = () => {
     getPresupuestoById,
     getProyectosByPresupuesto,
     dataDetail,
-    Proyectos
+    Proyectos,
   };
 };

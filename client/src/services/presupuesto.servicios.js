@@ -11,7 +11,7 @@ export const getAllPresupuestosService = async () => {
 };
 
 export const createPresupuestoServicio = async (data) => {
-  return await axios.post(`/presupuestos`,data)
+  return await axios.post(`/presupuestos/`,data)
 }
 
 export const updatePresupuestoServicio = async (data) => {
